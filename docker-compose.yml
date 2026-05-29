@@ -4,32 +4,47 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
-    environment:
-      DB_USER: postgres
-      DB_HOST: db
-      DB_NAME: loginapp
-      DB_PASSWORD: 1234
-      DB_PORT: 5432
-    depends_on:
-      db:
-        condition: service_healthy
+    env_file:
+      - ./backend/.env
 
   frontend:
     build: ./frontend
     ports:
       - "3000:80"
 
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: loginapp
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d loginapp"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    ports:
-      - "5432:5432"
+
+# services:
+
+#   backend:
+#     build: ./backend
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       DB_USER: postgres
+#       DB_HOST: db
+#       DB_NAME: loginapp
+#       DB_PASSWORD: 1234
+#       DB_PORT: 5432
+#     depends_on:
+#       db:
+#         condition: service_healthy
+
+#   frontend:
+#     build: ./frontend
+#     ports:
+#       - "3000:80"
+
+#   db:
+#     image: postgres
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 1234
+#       POSTGRES_DB: loginapp
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U postgres -d loginapp"]
+#       interval: 5s
+#       timeout: 5s
+#       retries: 5
+#     ports:
+#       - "5432:5432"
