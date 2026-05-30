@@ -1,18 +1,14 @@
-const PORT = process.env.PORT || 5000;
+const { Pool } = require("pg");
 
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is missing. Add it to backend/.env locally and to Render environment variables.");
+}
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-
-// const { Pool } = require("pg");
-
-// const pool = new Pool({
-//   user: process.env.DB_USER || "postgres",
-//   host: process.env.DB_HOST || "db",
-//   database: process.env.DB_NAME || "loginapp",
-//   password: process.env.DB_PASSWORD || "1234",
-//   port: process.env.DB_PORT || 5432,
-// });
-
-// module.exports = pool;
+module.exports = pool;
