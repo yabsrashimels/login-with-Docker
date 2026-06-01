@@ -7,6 +7,9 @@ const pool = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+/*
 const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000,http://127.0.0.1:3000,https://marvelous-dieffenbachia-8c62df.netlify.app")
   .split(",")
   .map((origin) => origin.trim().replace(/\/$/, ""));
@@ -25,6 +28,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
+*/
 app.use(express.json());
 
 function hashPassword(password) {
